@@ -1,8 +1,8 @@
 .footer {
-  border-top: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  
 }
 
-.footer:not(.color-background-1) {
+.footer:not(.color-scheme-1) {
   border-top: none;
 }
 
@@ -49,9 +49,28 @@
   border-top: 0;
 }
 
+.big-shop-name {
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.big-shop-name img {
+  width: 100%;
+  object-fit: scale-down;
+  
+}
+
 .footer__content-bottom-wrapper {
   display: flex;
   width: 100%;
+}
+
+.footer__copyright-wrapper {
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 1.5rem;
 }
 
 @media screen and (max-width: 749px) {
@@ -67,6 +86,12 @@
     flex-wrap: wrap;
     row-gap: 1.5rem;
     justify-content: center;
+  }
+
+  .footer__content-bottom.scroll-trigger.animate--slide-in {
+    animation: none;
+    opacity: 1;
+    transform: inherit;
   }
 }
 
@@ -146,13 +171,7 @@
 .footer-block__heading {
   margin-bottom: 2rem;
   margin-top: 0;
-  font-size: calc(var(--font-heading-scale) * 1.6rem);
-}
-
-@media screen and (min-width: 990px) {
-  .footer-block__heading {
-    font-size: calc(var(--font-heading-scale) * 1.8rem);
-  }
+  font-size: 60px;
 }
 
 .footer__list-social:empty,
@@ -170,12 +189,34 @@
 }
 
 .footer-block__newsletter {
-  text-align: center;
   flex-grow: 1;
 }
 
-.newsletter-form__field-wrapper {
+.footer-block__newsletter .newsletter-form {
+  margin: 0;
+}
+
+.footer .newsletter-form__field-wrapper .field::before, 
+.footer .newsletter-form__field-wrapper .field::after {
+    display: none;
+  }
+
+.footer .newsletter-description {
   max-width: 36rem;
+}
+
+.newsletter-form__field-wrapper .field {
+  max-width: 36rem;
+  border-bottom: 1px solid #000000;
+  margin: .5rem 0;
+}
+
+.footer .newsletter-form__button {
+  width: auto;
+}
+
+.footer .newsletter-form__button svg {
+  margin-left: .5rem;
 }
 
 @media screen and (min-width: 750px) {
@@ -271,12 +312,6 @@
 
   .footer__localization h2 {
     margin: 1rem 0 0;
-  }
-}
-
-@media screen and (max-width: 989px) {
-  .footer__localization noscript {
-    width: 100%;
   }
 }
 
