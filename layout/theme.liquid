@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="{{ request.locale.iso_code }}">
+<html class="js" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,6 +44,50 @@
     %}
 
     {% style %}
+       @font-face {
+        font-family: "SeriouslyNostalgic";
+        font-weight: 400;
+        src: 
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/seriouslynostalgicfn-regular-webfont.woff?v=1715555163) format("woff"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/seriouslynostalgicfn-regular-webfont.woff2?v=1715555162) format("woff2"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/SeriouslyNostalgicFn-Regular.otf?v=1715533649) format("otf");
+      }
+      
+      @font-face {
+        font-family: "SeriouslyNostalgic Ital";
+        font-weight: 400;
+        src: 
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/seriouslynostalgicital-reg-webfont.woff?v=1715532389) format("woff"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/seriouslynostalgicital-reg-webfont.woff2?v=1715532389) format("woff2"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/SeriouslyNostalgicFn-Regular.otf?v=1715533649) format("otf");
+      }
+      
+      @font-face {
+        font-family: "SeriouslyNostalgic Fn It";
+        font-weight: 400;
+        src: 
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/seriouslynostalgicfnit-reg-webfont.woff?v=1715531920) format("woff"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/seriouslynostalgicfnit-reg-webfont.woff2?v=1715531920) format("woff2"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/SeriouslyNostalgicFnIt-Reg.otf?v=1715533649) format("otf");
+      }
+
+      @font-face {
+        font-family: "Suisse Intl";
+        font-weight: 400;
+        src:
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/SuisseIntl-Regular-WebM.woff2?v=1715531725) format("woff2"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/SuisseIntl-Regular-WebM.ttf?v=1715531724) format("ttf");
+      }
+      
+      @font-face {
+        font-family: "PP NeueBit";
+        font-weight: 700;
+        src:
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/NeueBit-Bold.woff?v=1715546369) format("woff"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/NeueBit-Bold.woff2?v=1715546368) format("woff2"),
+          url(https://cdn.shopify.com/s/files/1/0651/3616/5055/files/NeueBit-Bold.otf?v=1715546368) format("otf");
+      }
+      
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
       {{ body_font_italic | font_face: font_display: 'swap' }}
@@ -96,14 +140,16 @@
       }
 
       :root {
-        --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        --font-body-family: "Suisse Intl", {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
         --font-body-style: {{ settings.type_body_font.style }};
-        --font-body-weight: {{ settings.type_body_font.weight }};
+        --font-body-weight: 400;
         --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
+        --old-font-body-weight: {{ settings.type_body_font.weight }};
 
-        --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+        --font-heading-family: "SeriouslyNostalgic", {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
         --font-heading-style: {{ settings.type_header_font.style }};
-        --font-heading-weight: {{ settings.type_header_font.weight }};
+        --font-heading-weight: 400;
+        --old-font-heading-weight: {{ settings.type_header_font.weight }};
 
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
@@ -254,10 +300,14 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
@@ -275,7 +325,6 @@
     {%- endif -%}
 
     <script>
-      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
       if (Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');
       }
@@ -333,6 +382,9 @@
         itemRemoved: `{{ 'sections.quick_order_list.items_removed.one' | t: quantity: '[quantity]' }}`,
         viewCart: `{{- 'sections.quick_order_list.view_cart' | t -}}`,
         each: `{{- 'sections.quick_order_list.each' | t: money: '[money]' }}`,
+        min_error: `{{- 'sections.quick_order_list.min_error' | t: min: '[min]' }}`,
+        max_error: `{{- 'sections.quick_order_list.max_error' | t: max: '[max]' }}`,
+        step_error: `{{- 'sections.quick_order_list.step_error' | t: step: '[step]' }}`,
       };
 
       window.accessibilityStrings = {
@@ -342,6 +394,7 @@
         playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
         recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
         recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
+        countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
       };
     </script>
 
