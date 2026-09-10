@@ -430,7 +430,7 @@
                   {% else %}
                     Subscribe
                   {% endif %}
-                  {% render 'icon-arrow' →%}
+                  {% render 'icon-arrow' %}
                 </button>
                 {%- if form.posted_successfully? -%}
                   <script>
@@ -865,3 +865,13 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'icon-arrow' →%}"
+  to: "{% render 'icon-arrow' %}"
+  position: 16870..16895
+{% endcomment %}

@@ -299,7 +299,7 @@
       
       <div class="contact__button">
         <button type="submit" class="button">
-          Apply to Book {% render 'icon-arrow' →%}
+          Apply to Book {% render 'icon-arrow' %}
         </button>
       </div>
       {%- if form.posted_successfully? -%}
@@ -408,3 +408,13 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'icon-arrow' →%}"
+  to: "{% render 'icon-arrow' %}"
+  position: 13852..13877
+{% endcomment %}
